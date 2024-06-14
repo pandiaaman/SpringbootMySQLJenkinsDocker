@@ -1,5 +1,6 @@
 package com.springSQLJenkinsDocker.serviceImpl;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
@@ -44,27 +45,10 @@ class StudentServiceImplTest {
 	@Autowired
 	private DTOConverterImpl dtoMapper;
 	
-	private static List<Student> databaseData = new ArrayList<>();
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		log.info("StudentServiceImplTest is running...");
-		
-		
-		
-		
-		
-		Student stud1 = new Student("UID1", "Aman", 10);
-		Student stud2 = new Student("UID2", "Divyam", 50);
-		Student stud3 = new Student("UID3", "Anand", 100);
-		Student stud4 = new Student("UID4", "Ayaz", 80);
-		Student stud5 = new Student("UID5", "Sumit", 90);
-		
-		databaseData.add(stud1);
-		databaseData.add(stud2);
-		databaseData.add(stud3);
-		databaseData.add(stud4);
-		databaseData.add(stud5);
 		
 	}
 
@@ -82,9 +66,10 @@ class StudentServiceImplTest {
 	}
 
 	@Test
-	void testSaveStudent() {
+	void StudentService_SaveStudent_ReturnsSavedStudentResponseDTO() {
 		log.info("testing save Student...");
 		
+		//Arrange
 		//expected output from repository save method
 		StudentResponseDTO expectedOutput = StudentResponseDTO.builder().studentId("someid")
 				.studentName("Test Name")
@@ -97,18 +82,19 @@ class StudentServiceImplTest {
 		
 		//Mocks for below lines of code:
 		//mock for Student student = dtoMapper.studentRequestDtoToStudent(studentRequest);
-		when(this.dtoMappingMock.studentRequestDtoToStudent(any())).thenReturn(new Student());
+//		when(this.dtoMappingMock.studentRequestDtoToStudent(any())).thenReturn(new Student());
 		//mock for Student savedStudent =  this.repository.save(student);
-		when(this.repositoryMock.save(any())).thenReturn(new Student());
+//		when(this.repositoryMock.save(any())).thenReturn(new Student());
 		//mock for StudentResponseDTO studentResponse = this.dtoMapper.studentToStudentResponseDTO(savedStudent);
 		when(this.dtoMappingMock.studentToStudentResponseDTO(any())).thenReturn(expectedOutput);
 		
-		
+		//Act
 		StudentResponseDTO testOutput = this.studentService.saveStudent(studentRequestOb);
 		
 		log.info("actual output" + testOutput);
 		log.info("expected output" + expectedOutput);
 		
+		//Assert
 		assertEquals(testOutput, expectedOutput);
 		
 //		fail("Not yet implemented");
@@ -125,24 +111,31 @@ class StudentServiceImplTest {
 //	}
 //
 //	@Test
-//	void testGetAllStudents() {
+//	void StudentService_GetAllStudents_ReturnListOfStudentResponseDTO() {
+//		log.info("testing getAll students service...");
 //		
-//		//preparing the expected output
-//		List<StudentResponseDTO> expectedOutput = new ArrayList<>();
-//		for(Student stud: databaseData) {
-//			expectedOutput.add(new StudentResponseDTO("1","aman",5));
-//		}
+//		//Arrange
+////		List<StudentResponseDTO> expectedResponseList = new ArrayList<>();
+////		
+////		StudentResponseDTO stud1 = StudentResponseDTO.builder().studentId("stud1").studentName("Aman").studentMarks(10).build();
+////		StudentResponseDTO stud2 = StudentResponseDTO.builder().studentId("stud2").studentName("Anand").studentMarks(100).build();
+////		StudentResponseDTO stud3 = StudentResponseDTO.builder().studentId("stud3").studentName("Vaibhav").studentMarks(70).build();
+////		StudentResponseDTO stud4 = StudentResponseDTO.builder().studentId("stud4").studentName("Sumit").studentMarks(50).build();
+////		
+////		expectedResponseList.add(stud1);
+////		expectedResponseList.add(stud2);
+////		expectedResponseList.add(stud3);
+////		expectedResponseList.add(stud4);
 //		
-//		//mock for List<Student> allStudents = this.repository.findAll();
-//		when(this.repositoryMock.findAll()).thenReturn(databaseData);
+//		this.studentService.saveStudent(new StudentRequestDTO("hello",50.0));
 //		
-//		//mock for resultStudentList.add(this.dtoMapper.studentToStudentResponseDTO(student));
-//		when(this.dtoMapper.studentToStudentResponseDTO(any())).thenReturn(new StudentResponseDTO("1","aman",5));
+//		//Act
+//		when(this.repositoryMock.findAll()).thenReturn(new ArrayList<Student>());
+//		when(this.dtoMappingMock.studentToStudentResponseDTO(any())).thenReturn(new StudentResponseDTO());
 //		
-//		List<StudentResponseDTO> actualStudentList =  this.studentService.getAllStudents();
-//		
-//		assertEquals(expectedOutput, actualStudentList);
-////		fail("Not yet implemented");
+//		List<StudentResponseDTO> actualOutput = this.studentService.getAllStudents();
+//		//Assert
+//		assertThat(actualOutput).isNotNull();
 //	}
 
 }

@@ -7,4 +7,6 @@ public interface DTOConverterMap {
 	public StudentResponseDTO studentToStudentResponseDTO(Student student);
 	
 	public Student studentRequestDtoToStudent(StudentRequestDTO studentRequestDTO);
+	
+	public Student studentUpdateRequestDtoToStudent(StudentUpdateRequestDTO studentUpdateRequestDTO);
 }

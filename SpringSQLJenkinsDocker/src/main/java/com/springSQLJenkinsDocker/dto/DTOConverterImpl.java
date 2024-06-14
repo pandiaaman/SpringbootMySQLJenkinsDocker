@@ -34,5 +34,18 @@ public class DTOConverterImpl implements DTOConverterMap{@Override
 		return student;
 	}
 
+	@Override
+	public Student studentUpdateRequestDtoToStudent(StudentUpdateRequestDTO studentUpdateRequestDTO) {
+		log.info("DTOConverterImpl::studentUpdateRequestDtoToStudent");
+		
+		Student student = new Student();
+		
+		student.setStudentId(studentUpdateRequestDTO.getStudentId());
+		student.setStudentName(studentUpdateRequestDTO.getStudentName());
+		student.setStudentMarks(studentUpdateRequestDTO.getStudentMarks());
+		
+		return student;
+	}
+
 	
 }
